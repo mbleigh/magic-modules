@@ -1,0 +1,103 @@
+---
+!ruby/object:Api::Product
+name: FirebaseRules
+display_name: Firebase Rules
+versions:
+  - !ruby/object:Api::Product::Version
+    name: ga
+    base_url: https://firebaserules.googleapis.com/v1/
+scopes:
+  - https://www.googleapis.com/auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: Firebase Rules
+    url: https://console.cloud.google.com/apis/library/firebaserules.googleapis.com/
+objects:
+  - !ruby/object:Api::Resource
+    name: Ruleset
+    base_url: projects/{{project}}/rulesets
+    create_verb: :POST
+    update_verb: :PATCH
+    update_mask: true
+    input: true
+    description: |
+      A Ruleset for Firebase Rules. When associated with the current release,
+      this will control Firebase Rules for a service.
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        "Official Documentation": "https://firebase.google.com/docs/rules"
+    properties:
+      - !ruby/object:Api::Type::String
+        name: name
+        description: |
+          The full resource name for the Ruleset.
+        output: true
+        pattern: "projects/{{project}}/rulesets/{{name}}"
+      - !ruby/object:Api::Type::NestedObject
+        name: source
+        description: |
+          The rules source for this ruleset.
+        properties:
+          - !ruby/object:Api::Type::Array
+            name: files
+            description: |
+              A list of "files" that will make up the ruleset. Note that at present only
+              a single file is supported.
+            max_size: 1
+            item_type: !ruby/object:Api::Type::NestedObject
+              properties:
+                - !ruby/object:Api::Type::String
+                  name: name
+                  required: true
+                  description: |
+                    The filename for the source file.
+                - !ruby/object:Api::Type::String
+                  name: content
+                  required: true
+                  description: |
+                    The rules language content for the file.
+      - !ruby/object:Api::Type::Time
+        name: createTime
+        description: The time when the ruleset was created.
+        output: true
+      - !ruby/object:Api::Type::NestedObject
+        name: metadata
+        description: The metadata for this ruleset.
+        output: true
+        properties:
+          - !ruby/object:Api::Type::Array
+            name: services
+            description: Services that this ruleset has declarations for (e.g. `cloud.firestore`)
+            output: true
+            item_type: Api::Type::String
+  - !ruby/object:Api::Resource
+    name: Release
+    base_url: projects/{{project}}/releases
+    create_verb: :POST
+    update_verb: :PATCH
+    description: |
+      A Release for Firebase Rules. The Ruleset referenced by a release will be the
+      actively enforced rules for the associated service.
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        "Official Documentation": "https://firebase.google.com/docs/rules"
+    properties:
+      - !ruby/object:Api::Type::String
+        name: name
+        description: |
+          The service name for the release. Must be `cloud.firestore` or `firebase.storage`.
+        input: true
+        required: true
+        pattern: "projects/{{project}}/releases/{{name}}"
+      - !ruby/object:Api::Type::String
+        name: rulesetName
+        description: The ruleset to associate with this release.
+        pattern: "projects/{{project}}/rulesets/{{name}}"
+      - !ruby/object:Api::Type::Time
+        name: createTime
+        description: The time when the release was created.
+        output: true
+      - !ruby/object:Api::Type::Time
+        name: updateTime
+        description: The time when the release was last updated.
+        output: true

@@ -1,0 +1,62 @@
+---
+!ruby/object:Api::Product
+name: FirebaseHosting
+display_name: Firebase Hosting
+versions:
+  - !ruby/object:Api::Product::Version
+    name: beta
+    base_url: https://firebasehosting.googleapis.com/v1beta1/
+scopes:
+  - https://www.googleapis.com/auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: Firebase Hosting
+    url: https://console.cloud.google.com/apis/library/firebasehosting.googleapis.com/
+objects:
+  - !ruby/object:Api::Resource
+    name: "Site"
+    min_version: beta
+    base_url: projects/{{project}}/sites
+    create_verb: :POST
+    update_verb: :PATCH
+    create_url: projects/{{project}}/sites?siteId={{name}}
+    update_mask: true
+    description: |
+      A Firebase Hosting site. Once created, can be deployed to using the Firebase CLI or
+      REST APIs.
+
+      Firebase Hosting site names must be globally unique and cannot be reused once deleted.
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        "Official Documentation": "https://firebase.google.com/docs/hosting"
+      api: "https://firebase.google.com/docs/reference/hosting/rest/v1beta1/projects.sites"
+    properties:
+      - !ruby/object:Api::Type::String
+        name: "name"
+        description: |
+          The site name (e.g. `{name}.web.app`).
+        required: true
+        input: true
+        pattern: "projects/{{project}}/sites/{{name}}"
+        url_param_only: true
+      - !ruby/object:Api::Type::Enum
+        name: type
+        output: true
+        description: |
+          The site type - default or user-created.
+        values:
+          - :TYPE_UNSPECIFIED
+          - :DEFAULT_SITE
+          - :USER_SITE
+      - !ruby/object:Api::Type::String
+        name: appId
+        description: |
+          The Firebase Web App ID to associate with this Hosting site.
+      - !ruby/object:Api::Type::String
+        name: defaultUrl
+        output: true
+        description: |
+          The default URL for the site in the form of `https://{name}.web.app`.
+      - !ruby/object:Api::Type::KeyValuePairs
+        name: "labels"
+        description: "Resource labels that can contain user-provided metadata"
