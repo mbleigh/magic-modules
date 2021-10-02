@@ -1,0 +1,5 @@
+resource "google_firebase_database_instance" "rtdb_eu" {
+  provider = google-beta
+  name     = "tf-test-db%{random_suffix}"
+  location = "europe-west1"
+}

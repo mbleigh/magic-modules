@@ -13,12 +13,12 @@
 
 --- !ruby/object:Provider::Terraform::Config
 overrides: !ruby/object:Overrides::ResourceOverrides
-  Site: !ruby/object:Overrides::Terraform::ResourceOverride
-    import_format: ["projects/{{project}}/sites/{{name}}", "{{name}}"]
-    id_format: "projects/{{project}}/sites/{{name}}"
+  Instance: !ruby/object:Overrides::Terraform::ResourceOverride
+    import_format: ["projects/{{project}}/locations/{{location}}/instances/{{name}}", "{{name}}"]
+    id_format: "projects/{{project}}/locations/{{location}}/instances/{{name}}"
     examples:
       - !ruby/object:Provider::Terraform::Examples
-        name: "firebase_hosting_site_basic"
+        name: "firebase_database_instance"
         min_version: 'beta'
     properties:
       name: !ruby/object:Overrides::Terraform::PropertyOverride

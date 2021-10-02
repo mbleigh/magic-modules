@@ -1,0 +1,66 @@
+---
+!ruby/object:Api::Product
+name: FirebaseDatabase
+display_name: Firebase Database
+versions:
+  - !ruby/object:Api::Product::Version
+    name: beta
+    base_url: https://firebasedatabase.googleapis.com/v1beta/
+scopes:
+  - https://www.googleapis.com/auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: Firebase Hosting
+    url: https://console.cloud.google.com/apis/library/firebasedatabase.googleapis.com/
+objects:
+  - !ruby/object:Api::Resource
+    name: "Instance"
+    min_version: beta
+    input: true
+    base_url: projects/{{project}}/locations/{{location}}/instances
+    create_verb: :POST
+    update_verb: :PATCH
+    create_url: projects/{{project}}/locations/{{location}}/instances?databaseId={{name}}
+    update_mask: true
+    description: |
+      A Firebase Realtime Database instance.
+    references: !ruby/object:Api::Resource::ReferenceLinks
+      guides:
+        "Official Documentation": "https://firebase.google.com/docs/database"
+      api: "https://firebase.google.com/docs/reference/rest/database/database-management/rest"
+    properties:
+      - !ruby/object:Api::Type::String
+        name: "name"
+        description: |
+          The instance name (e.g. `{name}.firebaseio.com` or `{name}.{location}.firebasedatabase.app`)
+        required: true
+        input: true
+        pattern: "projects/{{project}}/locations/{{location}}/instances/{{name}}"
+        url_param_only: true
+      - !ruby/object:Api::Type::String
+        name: location
+        description: The Google Cloud region for the instance (e.g. `us-central1`, `europe-west1`).
+        required: true
+        input: true
+        url_param_only: true
+      - !ruby/object:Api::Type::Enum
+        name: type
+        output: true
+        description: The instance type - default or user-created.
+        values:
+          - :DATABASE_INSTANCE_TYPE_UNSPECIFIED
+          - :DEFAULT_DATABASE
+          - :USER_DATABASE
+      - !ruby/object:Api::Type::Enum
+        name: state
+        output: true
+        description: The state of the instance.
+        values:
+          - :LIFECYCLE_STATE_UNSPECIFIED
+          - :ACTIVE
+          - :DISABLED
+          - :DELETED
+      - !ruby/object:Api::Type::String
+        name: databaseUrl
+        output: true
+        description: The database URL for the instance.
