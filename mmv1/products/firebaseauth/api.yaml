@@ -1,0 +1,86 @@
+# Copyright 2019 Google Inc.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+!ruby/object:Api::Product
+name: FirebaseAuth
+display_name: Firebase Auth
+versions:
+  - !ruby/object:Api::Product::Version
+    name: ga
+    base_url: https://identitytoolkit.googleapis.com/admin/v2/
+scopes:
+  - https://www.googleapis.com/auth/identitytoolkit
+  - https://www.googleapis.com/auth/firebase
+  - https://www.googleapis.com/auth/cloud-platform
+apis_required:
+  - !ruby/object:Api::Product::ApiReference
+    name: Google Identity Platform
+    url: https://console.cloud.google.com/marketplace/details/google-cloud-platform/customer-identity/
+objects:
+  - !ruby/object:Api::Resource
+    name: Config
+    base_url: "projects/{{project}}/config"
+    self_link: "projects/{{project}}/config"
+    create_url: "projects/{{project}}/config"
+    update_url: "projects/{{project}}/config"
+    update_verb: :PATCH
+    update_mask: true
+    description: |
+      Update Firebase Auth config.
+    properties:
+      - !ruby/object:Api::Type::String
+        name: "name"
+        description: The resource name for the config.
+        output: true
+      - !ruby/object:Api::Type::Array
+        name: authorizedDomains
+        description: A list of domains from which Firebase Auth may be used for OAuth redirects.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: signIn
+        description: Sign-in provider configuration.
+        properties:
+          - !ruby/object:Api::Type::NestedObject
+            name: anonymous
+            description: Anonymous auth configuration.
+            properties:
+              - !ruby/object:Api::Type::Boolean
+                name: enabled
+                description: Whether or not Anonymous Auth is enabled.
+          - !ruby/object:Api::Type::NestedObject
+            name: email
+            description: Email auth configuration.
+            properties:
+              - !ruby/object:Api::Type::Boolean
+                name: enabled
+                description: Whether or not Email Auth is enabled.
+              - !ruby/object:Api::Type::Boolean
+                name: passwordRequired
+                description: |
+                  Whether a password is required for email auth or not.
+                  If true, both an email and password must be provided to sign in.
+                  If false, a user may sign in via either email/password or email link.
+          - !ruby/object:Api::Type::NestedObject
+            name: phoneNumber
+            description: Phone auth configuration.
+            properties:
+              - !ruby/object:Api::Type::Boolean
+                name: enabled
+                description: Whether or not Phone Auth is enabled.
+              - !ruby/object:Api::Type::KeyValuePairs
+                name: testPhoneNumbers
+                description: A map of <test phone number, fake code> that can be used for phone auth testing.
+          - !ruby/object:Api::Type::Boolean
+            name: allowDuplicateEmails
+            description: Whether to allow more than one account to have the same email.

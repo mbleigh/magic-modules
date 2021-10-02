@@ -1,0 +1,8 @@
+resource "google_firebase_auth_config" "auth" {
+  sign_in {
+    anonymous {
+      enabled = true
+    }
+  }
+  authorized_domains = ["your-domain.web.app", "your-domain.com"]
+}

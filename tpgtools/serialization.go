@@ -44,6 +44,10 @@ import (
 // DCLToTerraformReference converts a DCL resource name to the final tpgtools name
 // after overrides are applied
 func DCLToTerraformReference(resourceType, version string) (string, error) {
+	if version == "alpha" {
+		switch resourceType {
+		}
+	}
 	if version == "beta" {
 		switch resourceType {
 		case "AssuredWorkloadsWorkload":
@@ -147,6 +151,10 @@ func DCLToTerraformSampleName(service, resource string) (string, string, error) 
 
 // ConvertSampleJSONToHCL unmarshals json to an HCL string.
 func ConvertSampleJSONToHCL(resourceType string, version string, b []byte) (string, error) {
+	if version == "alpha" {
+		switch resourceType {
+		}
+	}
 	if version == "beta" {
 		switch resourceType {
 		case "AssuredWorkloadsWorkload":
@@ -1746,6 +1754,13 @@ func convertDataprocWorkflowTemplateBetaClusterClusterConfigSoftwareConfigToHCL(
 	if r.ImageVersion != nil {
 		outputConfig += fmt.Sprintf("\timage_version = %#v\n", *r.ImageVersion)
 	}
+	if r.OptionalComponents != nil {
+		outputConfig += "\toptional_components = ["
+		for _, v := range r.OptionalComponents {
+			outputConfig += fmt.Sprintf("%#v, ", v)
+		}
+		outputConfig += "]\n"
+	}
 	return outputConfig + "}"
 }
 
@@ -2865,6 +2880,9 @@ func DataprocWorkflowTemplateAsHCL(r dataproc.WorkflowTemplate) (string, error) 
 	if v := convertDataprocWorkflowTemplatePlacementToHCL(r.Placement); v != "" {
 		outputConfig += fmt.Sprintf("\tplacement %s\n", v)
 	}
+	if r.DagTimeout != nil {
+		outputConfig += fmt.Sprintf("\tdag_timeout = %#v\n", *r.DagTimeout)
+	}
 	if r.Parameters != nil {
 		for _, v := range r.Parameters {
 			outputConfig += fmt.Sprintf("\tparameters %s\n", convertDataprocWorkflowTemplateParametersToHCL(&v))
@@ -3772,6 +3790,13 @@ func convertDataprocWorkflowTemplateClusterClusterConfigSoftwareConfigToHCL(r *d
 	outputConfig := "{\n"
 	if r.ImageVersion != nil {
 		outputConfig += fmt.Sprintf("\timage_version = %#v\n", *r.ImageVersion)
+	}
+	if r.OptionalComponents != nil {
+		outputConfig += "\toptional_components = ["
+		for _, v := range r.OptionalComponents {
+			outputConfig += fmt.Sprintf("%#v, ", v)
+		}
+		outputConfig += "]\n"
 	}
 	return outputConfig + "}"
 }
@@ -5570,8 +5595,9 @@ func convertDataprocWorkflowTemplateBetaClusterClusterConfigSoftwareConfig(i int
 	}
 	in := i.(map[string]interface{})
 	return map[string]interface{}{
-		"imageVersion": in["image_version"],
-		"properties":   in["properties"],
+		"imageVersion":       in["image_version"],
+		"optionalComponents": in["optional_components"],
+		"properties":         in["properties"],
 	}
 }
 
@@ -7466,8 +7492,9 @@ func convertDataprocWorkflowTemplateClusterClusterConfigSoftwareConfig(i interfa
 	}
 	in := i.(map[string]interface{})
 	return map[string]interface{}{
-		"imageVersion": in["image_version"],
-		"properties":   in["properties"],
+		"imageVersion":       in["image_version"],
+		"optionalComponents": in["optional_components"],
+		"properties":         in["properties"],
 	}
 }
 
