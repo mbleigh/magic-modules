@@ -18,7 +18,7 @@ display_name: Identity Platform
 versions:
   - !ruby/object:Api::Product::Version
     name: ga
-    base_url: https://identitytoolkit.googleapis.com/v2/
+    base_url: https://identitytoolkit.googleapis.com/
 scopes:
   - https://www.googleapis.com/auth/identitytoolkit
   - https://www.googleapis.com/auth/firebase
@@ -30,9 +30,9 @@ apis_required:
 objects:
   - !ruby/object:Api::Resource
     name: "DefaultSupportedIdpConfig"
-    base_url: "projects/{{project}}/defaultSupportedIdpConfigs"
-    self_link: "projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}"
-    create_url: "projects/{{project}}/defaultSupportedIdpConfigs?idpId={{idp_id}}"
+    base_url: "v2/projects/{{project}}/defaultSupportedIdpConfigs"
+    self_link: "v2/projects/{{project}}/defaultSupportedIdpConfigs/{{idp_id}}"
+    create_url: "v2/projects/{{project}}/defaultSupportedIdpConfigs?idpId={{idp_id}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -91,9 +91,9 @@ objects:
           If this IDP allows the user to sign in
   - !ruby/object:Api::Resource
     name: "TenantDefaultSupportedIdpConfig"
-    base_url: "projects/{{project}}/tenants/{{tenant}}/defaultSupportedIdpConfigs"
-    self_link: "projects/{{project}}/tenants/{{tenant}}/defaultSupportedIdpConfigs/{{idp_id}}"
-    create_url: "projects/{{project}}/tenants/{{tenant}}/defaultSupportedIdpConfigs?idpId={{idp_id}}"
+    base_url: "v2/projects/{{project}}/tenants/{{tenant}}/defaultSupportedIdpConfigs"
+    self_link: "v2/projects/{{project}}/tenants/{{tenant}}/defaultSupportedIdpConfigs/{{idp_id}}"
+    create_url: "v2/projects/{{project}}/tenants/{{tenant}}/defaultSupportedIdpConfigs?idpId={{idp_id}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -159,9 +159,9 @@ objects:
           If this IDP allows the user to sign in
   - !ruby/object:Api::Resource
     name: "InboundSamlConfig"
-    base_url: "projects/{{project}}/inboundSamlConfigs"
-    self_link: "projects/{{project}}/inboundSamlConfigs/{{name}}"
-    create_url: "projects/{{project}}/inboundSamlConfigs?inboundSamlConfigId={{name}}"
+    base_url: "v2/projects/{{project}}/inboundSamlConfigs"
+    self_link: "v2/projects/{{project}}/inboundSamlConfigs/{{name}}"
+    create_url: "v2/projects/{{project}}/inboundSamlConfigs?inboundSamlConfigId={{name}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -248,9 +248,9 @@ objects:
                     The x509 certificate
   - !ruby/object:Api::Resource
     name: "TenantInboundSamlConfig"
-    base_url: "projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs"
-    self_link: "projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs/{{name}}"
-    create_url: "projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs?inboundSamlConfigId={{name}}"
+    base_url: "v2/projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs"
+    self_link: "v2/projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs/{{name}}"
+    create_url: "v2/projects/{{project}}/tenants/{{tenant}}/inboundSamlConfigs?inboundSamlConfigId={{name}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -346,9 +346,9 @@ objects:
                     The x509 certificate
   - !ruby/object:Api::Resource
     name: "OauthIdpConfig"
-    base_url: "projects/{{project}}/oauthIdpConfigs"
-    self_link: "projects/{{project}}/oauthIdpConfigs/{{name}}"
-    create_url: "projects/{{project}}/oauthIdpConfigs?oauthIdpConfigId={{name}}"
+    base_url: "v2/projects/{{project}}/oauthIdpConfigs"
+    self_link: "v2/projects/{{project}}/oauthIdpConfigs/{{name}}"
+    create_url: "v2/projects/{{project}}/oauthIdpConfigs?oauthIdpConfigId={{name}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -388,9 +388,9 @@ objects:
           The client secret of the OAuth client, to enable OIDC code flow.
   - !ruby/object:Api::Resource
     name: "TenantOauthIdpConfig"
-    base_url: "projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs"
-    self_link: "projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs/{{name}}"
-    create_url: "projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs?oauthIdpConfigId={{name}}"
+    base_url: "v2/projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs"
+    self_link: "v2/projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs/{{name}}"
+    create_url: "v2/projects/{{project}}/tenants/{{tenant}}/oauthIdpConfigs?oauthIdpConfigId={{name}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -438,8 +438,8 @@ objects:
           The client secret of the OAuth client, to enable OIDC code flow.
   - !ruby/object:Api::Resource
     name: "Tenant"
-    base_url: "projects/{{project}}/tenants"
-    self_link: "projects/{{project}}/tenants/{{name}}"
+    base_url: "v2/projects/{{project}}/tenants"
+    self_link: "v2/projects/{{project}}/tenants/{{name}}"
     update_verb: :PATCH
     update_mask: true
     description: |
@@ -476,3 +476,59 @@ objects:
           Whether authentication is disabled for the tenant. If true, the users under
           the disabled tenant are not allowed to sign-in. Admins of the disabled tenant
           are not able to manage its users.
+  - !ruby/object:Api::Resource
+    name: Config
+    base_url: "admin/v2/projects/{{project}}/config"
+    self_link: "admin/v2/projects/{{project}}/config"
+    create_url: "admin/v2/projects/{{project}}/config"
+    update_url: "admin/v2/projects/{{project}}/config"
+    update_verb: :PATCH
+    update_mask: true
+    description: |
+      Update Identity Platform configuration.
+    properties:
+      - !ruby/object:Api::Type::String
+        name: "name"
+        description: The resource name for the config.
+        output: true
+      - !ruby/object:Api::Type::Array
+        name: authorizedDomains
+        description: A list of domains from which Firebase Auth may be used for OAuth redirects.
+        item_type: Api::Type::String
+      - !ruby/object:Api::Type::NestedObject
+        name: signIn
+        description: Sign-in provider configuration.
+        properties:
+          - !ruby/object:Api::Type::NestedObject
+            name: anonymous
+            description: Anonymous auth configuration.
+            properties:
+              - !ruby/object:Api::Type::Boolean
+                name: enabled
+                description: Whether or not Anonymous Auth is enabled.
+          - !ruby/object:Api::Type::NestedObject
+            name: email
+            description: Email auth configuration.
+            properties:
+              - !ruby/object:Api::Type::Boolean
+                name: enabled
+                description: Whether or not Email Auth is enabled.
+              - !ruby/object:Api::Type::Boolean
+                name: passwordRequired
+                description: |
+                  Whether a password is required for email auth or not.
+                  If true, both an email and password must be provided to sign in.
+                  If false, a user may sign in via either email/password or email link.
+          - !ruby/object:Api::Type::NestedObject
+            name: phoneNumber
+            description: Phone auth configuration.
+            properties:
+              - !ruby/object:Api::Type::Boolean
+                name: enabled
+                description: Whether or not Phone Auth is enabled.
+              - !ruby/object:Api::Type::KeyValuePairs
+                name: testPhoneNumbers
+                description: A map of <test phone number, fake code> that can be used for phone auth testing.
+          - !ruby/object:Api::Type::Boolean
+            name: allowDuplicateEmails
+            description: Whether to allow more than one account to have the same email.

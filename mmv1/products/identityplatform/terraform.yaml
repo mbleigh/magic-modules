@@ -92,7 +92,15 @@ overrides: !ruby/object:Overrides::ResourceOverrides
       - !ruby/object:Provider::Terraform::Examples
         name: "identity_platform_tenant_basic"
         primary_resource_id: "tenant"
-
+  Config: !ruby/object:Overrides::Terraform::ResourceOverride
+    import_format: ["projects/{{project}}/config", "{{project}}"]
+    id_format: "projects/{{project}}/sites/{{name}}"
+    examples:
+      - !ruby/object:Provider::Terraform::Examples
+        name: "identity_platform_config"
+        min_version: 'beta'
+    custom_code: !ruby/object:Provider::Terraform::CustomCode
+      custom_create: templates/terraform/custom_create/identity_platform_config_create.go
 # This is for copying files over
 files: !ruby/object:Provider::Config::Files
   # These files have templating (ERB) code that will be run.
